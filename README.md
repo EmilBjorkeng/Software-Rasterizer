@@ -11,9 +11,9 @@ Below are some screenshots and renders captured directly from the software raste
 showcasing the lighting, texture, and alpha effects.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f6d76aa7-dfae-4aec-9776-83cbc7a5cdd7" width="320" alt="LitShaderMonkey">
-  <img src="https://github.com/user-attachments/assets/f09819dc-6995-4f64-a82d-f559e7c6f306" width="320" alt="CapriCube">
-  <img src="https://github.com/user-attachments/assets/b54f9482-669f-4f74-a8c4-13b0517e8e3e" width="320" alt="CubeWithTransparency">
+  <img src="https://github.com/user-attachments/assets/f6d76aa7-dfae-4aec-9776-83cbc7a5cdd7" width="300" alt="LitShaderMonkey">
+  <img src="https://github.com/user-attachments/assets/f09819dc-6995-4f64-a82d-f559e7c6f306" width="300" alt="CapriCube">
+  <img src="https://github.com/user-attachments/assets/b54f9482-669f-4f74-a8c4-13b0517e8e3e" width="300" alt="CubeWithTransparency">
 </p>
 
 ## Technical Information
