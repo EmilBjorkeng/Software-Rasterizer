@@ -5,6 +5,17 @@ The project includes my own implementations of vector, matrix, and quaternion ma
 
 This project began as a (C++) clone of [Sebastian Lague’s](https://www.youtube.com/@SebastianLague) software rasterizer, but over time it has evolved with enough additions and changes to become its own standalone project.
 
+## Pictures / Showcase
+
+Below are some screenshots and renders captured directly from the software rasterizer,
+showcasing the lighting, texture, and alpha effects.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f6d76aa7-dfae-4aec-9776-83cbc7a5cdd7" width="320" alt="LitShaderMonkey">
+  <img src="https://github.com/user-attachments/assets/f09819dc-6995-4f64-a82d-f559e7c6f306" width="320" alt="CapriCube">
+  <img src="https://github.com/user-attachments/assets/b54f9482-669f-4f74-a8c4-13b0517e8e3e" width="320" alt="CubeWithTransparency">
+</p>
+
 ## Technical Information
 
 The rasterizer supports loading OBJ and MTL files, which are converted into an internal Object structure.
