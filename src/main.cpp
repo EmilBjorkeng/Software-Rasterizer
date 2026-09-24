@@ -2,7 +2,6 @@
 #include <math.h>
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
-#include <iostream>
 #include <string.h>
 #include <cstdint>
 
@@ -206,12 +205,6 @@ int main() {
         // Normalize rotation after updates to prevent drift
         camera.rotation = camera.rotation.normalized();
 
-        //Monkey.rotation.y() += DeltaTime;
-
-        //
-        // Logic
-        //
-
         //
         // Draw
         //
@@ -228,23 +221,10 @@ int main() {
 
         RendersceneObjects(drawBuffer, pitch, depthBuffer, camera, sceneObjects, sceneLight);
 
-        /*renderObj(drawBuffer, depthBuffer, camera, WorldAxis);
-        //renderObj(drawBuffer, depthBuffer, camera, Floor);
-        renderObj(drawBuffer, depthBuffer, camera, Cube);
-        renderObj(drawBuffer, depthBuffer, camera, Monkey);
-        renderObj(drawBuffer, depthBuffer, camera, Dog);*/
-
         SDL_UnlockTexture(drawTexture);
-        //SDL_UpdateTexture(drawTexture, NULL, drawBuffer, WINDOW_WIDTH * sizeof(Uint32));
         SDL_RenderTexture(Renderer, drawTexture, NULL, NULL);
 
         drawFPS(Renderer, Font);
-
-        // Debug
-        /*char text[128];
-        float3 camRotation = camera.rotation.ToEulerAngles();
-        sprintf(text, "--Camera--\nX: %f\nY: %f\nZ: %f\nPitch: %f\nYaw: %f\nRoll: %f", camera.position[0], camera.position[1], camera.position[2], camRotation[0], camRotation[1], camRotation[2]);
-        render_text(text, 5, 5, (SDL_Color){255, 255, 255});*/
 
         SDL_RenderPresent(Renderer);
         deltaTime();
