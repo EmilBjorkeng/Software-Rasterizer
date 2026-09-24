@@ -1,6 +1,6 @@
 # Blender 4.3.2
 # www.blender.org
-mtllib alphaCube.mtl
+mtllib AlphaCube.mtl
 o Cube
 o Cube.001
 v -1.000000 -1.000000 -1.000000

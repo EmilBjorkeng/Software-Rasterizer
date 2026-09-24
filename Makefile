@@ -1,29 +1,38 @@
 CC = g++
-CFLAGS = -Isrc/include -std=c++26 -Wall
-LDFLAGS = -Lsrc/lib
-LDLIBS = -lmingw32 -lSDL3 -lSDL3_ttf
+CXXFLAGS = -Isrc/include -std=c++26 -Wall -Wextra
+PKG_CFLAGS := $(shell pkg-config --cflags sdl3 sdl3-ttf)
+PKG_LDFLAGS := $(shell pkg-config --libs sdl3 sdl3-ttf)
 
 TARGET = main
-SRC = $(filter-out src/$(TARGET).cpp, $(wildcard src/*.cpp))
+SRC = $(wildcard src/*.cpp)
 OBJ = $(SRC:src/%.cpp=%.o)
+
+ifeq ($(OS),Windows_NT)
+	RM = del /Q
+	EXE = .exe
+	RUN_CMD = .\$(TARGET)$(EXE)
+else
+	RM = rm -f
+	EXE =
+	RUN_CMD = ./$(TARGET)
+endif
 
 .PHONY: all clean run debug
 
-all: $(TARGET)
+all: $(TARGET)$(EXE)
 
 %.o: src/%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CXXFLAGS) $(PKG_CFLAGS) -c $< -o $@
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $^ src/$(TARGET).cpp $(LDFLAGS) $(LDLIBS) -o $@
+$(TARGET)$(EXE): $(OBJ)
+	$(CC) $(CXXFLAGS) $^ -o $@ $(PKG_LDFLAGS)
 
 clean:
-	-del $(TARGET).exe 2>nul || true
-	-del *.o 2>nul || true
+	-$(RM) $(TARGET)$(EXE)
+	-$(RM) *.o
 
-run: clean all
-	.\$(TARGET).exe
-	$(MAKE) clean
+run: all
+	$(RUN_CMD)
 
-debug: CFLAGS += -g
-debug: clean all
+debug: clean
+	$(MAKE) CXXFLAGS="$(CXXFLAGS) -g"

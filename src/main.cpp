@@ -61,7 +61,7 @@ void render_text(char *text, int x, int y, SDL_Color color) {
     return;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     ASSERT(
         SDL_Init(SDL_INIT_EVENTS),
         "Initialization of SDL failed: %s\n",
