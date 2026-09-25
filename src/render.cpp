@@ -112,7 +112,7 @@ const std::vector<const Object*> &sceneObjects, const std::vector<const Light*> 
         float2 Vertex2 = c.screenPos;
 
         float area = Cross2D(Vertex0, Vertex1, Vertex2);
-        if (area == 0) continue; // Skip if area is 0
+        if (area <= 0) continue; // Backface culling + zero area check
 
         // Precalculate some depth numbers
         float3 depths = float3(a.depth, b.depth, c.depth);
@@ -127,9 +127,9 @@ const std::vector<const Object*> &sceneObjects, const std::vector<const Light*> 
         // Top-left rule bias: Ensures shared edges are only drawn by one triangle
         // Applies -1 bias to pixels exactly on the right or bottom edges to exclude them
         constexpr float edgeBias = -1e-4f;
-        float Bias0 = (Vertex1.y() > Vertex0.y()) || (Vertex1.y() == Vertex0.y() && Vertex1.x() > Vertex0.x()) ? 0.0f : edgeBias;
-        float Bias1 = (Vertex2.y() > Vertex1.y()) || (Vertex2.y() == Vertex1.y() && Vertex2.x() > Vertex1.x()) ? 0.0f : edgeBias;
-        float Bias2 = (Vertex0.y() > Vertex2.y()) || (Vertex0.y() == Vertex2.y() && Vertex0.x() > Vertex2.x()) ? 0.0f : edgeBias;
+        float Bias0 = (Vertex2.y() > Vertex1.y()) || (Vertex2.y() == Vertex1.y() && Vertex2.x() > Vertex1.x()) ? 0.0f : edgeBias;
+        float Bias1 = (Vertex0.y() > Vertex2.y()) || (Vertex0.y() == Vertex2.y() && Vertex0.x() > Vertex2.x()) ? 0.0f : edgeBias;
+        float Bias2 = (Vertex1.y() > Vertex0.y()) || (Vertex1.y() == Vertex0.y() && Vertex1.x() > Vertex0.x()) ? 0.0f : edgeBias;
 
         for (int y = minY; y < maxY; ++y) {
             for (int x = minX; x < maxX; ++x) {
@@ -197,7 +197,8 @@ float2 ViewToScreen(const float3 vertex_view, int fov) {
     float screenHeight_world = tan(fovRadians / 2.0f) * 2.0f;
     float pixelsPerWorldUnit = SCREEN_HEIGHT / screenHeight_world / vertex_view.z();
 
-    float2 pixelOffset = float2(vertex_view.x(), vertex_view.y()) * pixelsPerWorldUnit;
+    // -y -> +Y points up
+    float2 pixelOffset = float2(vertex_view.x(), -vertex_view.y()) * pixelsPerWorldUnit;
     float2 vertex_screen = float2(SCREEN_WIDTH, SCREEN_HEIGHT) / 2 + pixelOffset;
     return vertex_screen;
 }

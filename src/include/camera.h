@@ -57,8 +57,7 @@ public:
 
     constexpr mat4<T> GetViewMatrix() const {
         Quaternion<T> invRot = rotation.Inverse();
-        mat4<T> FlipY = mat4<T>::Scale(float3(1, -1, 1)); // Flip Y -> +Y points UP
-        return mat4<T>::Rotation(invRot) * FlipY * mat4<T>::Translate(-position);
+        return mat4<T>::Rotation(invRot) * mat4<T>::Translate(-position);
     }
 };
 

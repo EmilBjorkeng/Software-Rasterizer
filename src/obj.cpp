@@ -62,7 +62,7 @@ Object LoadObjFile(const char* path) {
         if (type == "v") {
             float3 v;
             ss >> v.x() >> v.y() >> v.z();
-            v.z() *= -1; // Flip vertex Z
+            v.z() = -v.z(); // Flip vertex Z to convert from right to laft hand
             vertices.push_back(v);
 
             // Axis-Aligned Bounding Box
@@ -82,7 +82,8 @@ Object LoadObjFile(const char* path) {
         else if (type == "vn") {
             float3 n;
             ss >> n.x() >> n.y() >> n.z();
-            n.z() *= -1; // Flip normal Z
+            n.z() *= -1; // Flip normal Z to convert from right to left hand
+
             normals.push_back(n);
         }
         else if (type == "f") {
