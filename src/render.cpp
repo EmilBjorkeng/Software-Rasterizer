@@ -58,7 +58,7 @@ const std::vector<const Object*> &sceneObjects, const std::vector<const Light*> 
 
                 float3 ab = b - a;
                 float3 ac = c - a;
-                tri.normal = ab.cross(ac).normalized();
+                tri.normal = ac.cross(ab).normalized();
 
                 // Axis-Aligned Bounding Box
                 tri.aabbMin = float3(
@@ -124,12 +124,12 @@ const std::vector<const Object*> &sceneObjects, const std::vector<const Light*> 
         int minY = std::clamp((int)std::floor( std::min(std::min(Vertex0.y(), Vertex1.y()), Vertex2.y()) ), 0, SCREEN_HEIGHT);
         int maxY = std::clamp((int)std::ceil( std::max(std::max(Vertex0.y(), Vertex1.y()), Vertex2.y()) ), 0, SCREEN_HEIGHT);
 
-        // Top-left rule bias: Ensures shared edges are only drawn by one triangle
-        // Applies -1 bias to pixels exactly on the right or bottom edges to exclude them
+        // Top-left rule: Ensures shared edges are only drawn by one triangle
+        // Applies a small negative bias to pixels exactly on the right or bottom edges to exclude them
         constexpr float edgeBias = -1e-4f;
-        float Bias0 = (Vertex2.y() > Vertex1.y()) || (Vertex2.y() == Vertex1.y() && Vertex2.x() > Vertex1.x()) ? 0.0f : edgeBias;
-        float Bias1 = (Vertex0.y() > Vertex2.y()) || (Vertex0.y() == Vertex2.y() && Vertex0.x() > Vertex2.x()) ? 0.0f : edgeBias;
-        float Bias2 = (Vertex1.y() > Vertex0.y()) || (Vertex1.y() == Vertex0.y() && Vertex1.x() > Vertex0.x()) ? 0.0f : edgeBias;
+        float Bias0 = (Vertex2.y() > Vertex1.y()) || (Vertex2.y() == Vertex1.y() && Vertex2.x() < Vertex1.x()) ? 0.0f : edgeBias;
+        float Bias1 = (Vertex0.y() > Vertex2.y()) || (Vertex0.y() == Vertex2.y() && Vertex0.x() < Vertex2.x()) ? 0.0f : edgeBias;
+        float Bias2 = (Vertex1.y() > Vertex0.y()) || (Vertex1.y() == Vertex0.y() && Vertex1.x() < Vertex0.x()) ? 0.0f : edgeBias;
 
         for (int y = minY; y < maxY; ++y) {
             for (int x = minX; x < maxX; ++x) {

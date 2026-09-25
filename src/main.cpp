@@ -173,12 +173,12 @@ int main() {
 
         if (KEY_PRESSED(KEY_UP)) {
             float3 rightAxis = camera.Right();
-            Quaternion<float> pitchRot = Quaternion<float>::FromAxisAngle(rightAxis, angle);
+            Quaternion<float> pitchRot = Quaternion<float>::FromAxisAngle(rightAxis, -angle);
             camera.rotation = pitchRot * camera.rotation;
         }
         if (KEY_PRESSED(KEY_DOWN)) {
             float3 rightAxis = camera.Right();
-            Quaternion<float> pitchRot = Quaternion<float>::FromAxisAngle(rightAxis, -angle);
+            Quaternion<float> pitchRot = Quaternion<float>::FromAxisAngle(rightAxis, angle);
             camera.rotation = pitchRot * camera.rotation;
         }
         if (KEY_PRESSED(KEY_LEFT)) {
@@ -193,12 +193,12 @@ int main() {
         }
         if (KEY_PRESSED(KEY_Q)) {
             float3 forwardAxis = camera.Forward();
-            Quaternion<float> rollRot = Quaternion<float>::FromAxisAngle(forwardAxis, -angle);
+            Quaternion<float> rollRot = Quaternion<float>::FromAxisAngle(forwardAxis, angle);
             camera.rotation = rollRot * camera.rotation;
         }
         if (KEY_PRESSED(KEY_E)) {
             float3 forwardAxis = camera.Forward();
-            Quaternion<float> rollRot = Quaternion<float>::FromAxisAngle(forwardAxis, angle);
+            Quaternion<float> rollRot = Quaternion<float>::FromAxisAngle(forwardAxis, -angle);
             camera.rotation = rollRot * camera.rotation;
         }
 
