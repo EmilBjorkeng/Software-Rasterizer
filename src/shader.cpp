@@ -111,7 +111,7 @@ uint32_t LitDiffuseShader::pixelColor(const Material &material, float2, float3 n
             // Get the amout of DirectionToLight (vector) it takes to go from point to the plane
             // Skip if it's negative or above 1 (further away then the light)
             float denom = DirectionToLight.dot(N);
-            if (denom < -1e-6f) continue; // Parallel, or the light would hit the back side
+            if (denom < 1e-6f) continue; // Parallel, or the light would hit the back side
             float t = (a - origin).dot(N) / denom;
             if (t <= 0 || t >= d) continue;
 
@@ -249,7 +249,7 @@ uint32_t LitTextureShader::pixelColor(const Material &material, float2 texCoord,
             // Get the amout of DirectionToLight (vector) it takes to go from point to the plane
             // Skip if it's negative or above 1 (further away then the light)
             float denom = DirectionToLight.dot(N);
-            if (denom < -1e-6f) continue; // Parallel, or the light would hit the back side
+            if (denom < 1e-6f) continue; // Parallel, or the light would hit the back side
             float t = (a - origin).dot(N) / denom;
             if (t <= 0 || t >= d) continue;
 
