@@ -188,7 +188,7 @@ uint32_t TextureShader::pixelColor(const Material &material, float2 texCoord, fl
     if (material.diffuseTexture) {
         textureColor = material.diffuseTexture->pixelColor(texCoord);
     }
-    float3 combinedColor = baseColor * (textureColor + float3::Filled(1e-6f)); // prevent black texture nullifying everything
+    float3 combinedColor = baseColor * textureColor;
 
     // Clamp each component to [0,1]
     float r = std::clamp(combinedColor.x(), 0.0f, 1.0f);
@@ -207,7 +207,7 @@ uint32_t LitTextureShader::pixelColor(const Material &material, float2 texCoord,
     if (material.diffuseTexture) {
         textureColor = material.diffuseTexture->pixelColor(texCoord);
     }
-    float3 combinedColor = baseColor * (textureColor + float3::Filled(1e-6f)); // prevent black texture nullifying everything
+    float3 combinedColor = baseColor * textureColor;
 
     float3 diffuse = float3::Zero();
 
