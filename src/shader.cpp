@@ -190,7 +190,12 @@ uint32_t TextureShader::pixelColor(const Material &material, float2 texCoord, fl
     }
     float3 combinedColor = baseColor * (textureColor + float3::Filled(1e-6f)); // prevent black texture nullifying everything
 
-    return pack(combinedColor.x(), combinedColor.y(), combinedColor.z(), 1.0f);
+    // Clamp each component to [0,1]
+    float r = std::clamp(combinedColor.x(), 0.0f, 1.0f);
+    float g = std::clamp(combinedColor.y(), 0.0f, 1.0f);
+    float b = std::clamp(combinedColor.z(), 0.0f, 1.0f);
+
+    return pack(r, g, b, 1.0f);
 }
 
 // === LitTextureShader ===
