@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #define AMBIENT_LIGHT 0.1f
-#define AMBIENT_COLOR float3(1.0f, 1.0f, 1.0f);
+#define AMBIENT_COLOR float3(1.0f, 1.0f, 1.0f)
 
 // Ambient Light
 float LitDiffuseShader::ambientLight = AMBIENT_LIGHT;
@@ -108,8 +108,8 @@ uint32_t LitDiffuseShader::pixelColor(const Material &material, float2, float3 n
                 continue;
             }
 
-            // Get the amout of DirectionToLight (vector) it takes to go from point to the plane
-            // Skip if it's negative or above 1 (further away then the light)
+            // Get the amount of DirectionToLight (vector) it takes to go from point to the plane
+            // Skip if it's negative or further away than the light
             float denom = DirectionToLight.dot(N);
             if (denom < 1e-6f) continue; // Parallel, or the light would hit the back side
             float t = (a - origin).dot(N) / denom;
@@ -247,8 +247,8 @@ uint32_t LitTextureShader::pixelColor(const Material &material, float2 texCoord,
                 continue;
             }
 
-            // Get the amout of DirectionToLight (vector) it takes to go from point to the plane
-            // Skip if it's negative or above 1 (further away then the light)
+            // Get the amount of DirectionToLight (vector) it takes to go from point to the plane
+            // Skip if it's negative or further away than the light
             float denom = DirectionToLight.dot(N);
             if (denom < 1e-6f) continue; // Parallel, or the light would hit the back side
             float t = (a - origin).dot(N) / denom;

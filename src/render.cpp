@@ -168,6 +168,7 @@ const std::vector<const Object*> &sceneObjects, const std::vector<const Light*> 
                     normal += b.vertexNormals * invDepths[1] * baryCoord[1];
                     normal += c.vertexNormals * invDepths[2] * baryCoord[2];
                     normal *= depth;
+                    normal = normal.normalized();
 
                     // Interpolate World Space Point
                     float3 point{};

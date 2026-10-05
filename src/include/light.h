@@ -70,7 +70,15 @@ public:
     }
 
     float3 getPosition(const float3 &point) const override {
-        return point - (direction * std::numeric_limits<float>::infinity()); // Set the lights position as far away from the point as possible
+        constexpr float inf = std::numeric_limits<float>::infinity();
+        float3 pos = point;
+        for (std::size_t i = 0; i < 3; i++) {
+            if (direction[i] > 0.0f)
+                pos[i] = -inf;
+            else if (direction[i] < 0.0f)
+                pos[i] = inf;
+        }
+        return pos;
     }
 };
 
