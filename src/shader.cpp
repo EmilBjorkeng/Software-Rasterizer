@@ -123,12 +123,8 @@ uint32_t LitDiffuseShader::pixelColor(const Material &material, float2, float3 n
             }
         }
 
-        // Make the light dimmer the further it is away (inverse square)
-        if (d < 1e-6f) d = 1e-6f; // Avoid divide by zero
-        float invDistance = 1 / (d * d);
-
         if (!inShadow)
-            diffuse += material.diffuseColor * l->color * l->intensity * ndotl * invDistance;
+            diffuse += material.diffuseColor * l->color * l->intensity * ndotl * l->attenuation(point);
     }
 
     // Ambient lighting contribution
@@ -266,12 +262,8 @@ uint32_t LitTextureShader::pixelColor(const Material &material, float2 texCoord,
             }
         }
 
-        // Make the light dimmer the further it is away (inverse square)
-        if (d < 1e-6f) d = 1e-6f; // Avoid divide by zero
-        float invDistance = 1 / (d * d);
-
         if (!inShadow)
-            diffuse += combinedColor * l->color * l->intensity * ndotl * invDistance;
+            diffuse += combinedColor * l->color * l->intensity * ndotl * l->attenuation(point);
     }
 
     // Ambient lighting contribution

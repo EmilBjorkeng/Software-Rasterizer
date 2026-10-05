@@ -12,7 +12,8 @@ public:
     float3 color;
 
     virtual float3 lightDirection(const float3& point) const = 0;
-    virtual float distance(const float3& point) const = 0;
+    virtual float distance(const float3& point) const = 0; // Max length for shadow ray
+    virtual float attenuation(const float3& point) const = 0; // Distance attenuation
     virtual float3 getPosition(const float3 &point) const = 0;
     virtual ~Light() = default;
 };
@@ -35,6 +36,12 @@ public:
         return (position - point).length();
     }
 
+    float attenuation(const float3 &point) const override {
+        float d = distance(point);
+        if (d < 1e-6f) d = 1e-6f; // Avoid divide by zero
+        return 1.0f / (d*d);
+    }
+
     float3 getPosition(const float3&) const override {
         return position;
     }
@@ -55,11 +62,15 @@ public:
     }
 
     float distance(const float3&) const override {
-        return 1; // Directional light has no distance cutoff
+        return std::numeric_limits<float>::infinity(); // Directional light has no distance cutoff
+    }
+
+    float attenuation(const float3&) const override {
+        return 1.0f;
     }
 
     float3 getPosition(const float3 &point) const override {
-        return point - (direction * INFINITY); // Set the lights position as far away from the point as possible
+        return point - (direction * std::numeric_limits<float>::infinity()); // Set the lights position as far away from the point as possible
     }
 };
 
@@ -89,9 +100,15 @@ public:
 
         return (position - point).normalized();
     }
-    
+
     float distance(const float3& point) const override {
         return (position - point).length();
+    }
+
+    float attenuation(const float3 &point) const override {
+        float d = distance(point);
+        if (d < 1e-6f) d = 1e-6f; // Avoid divide by zero
+        return 1.0f / (d*d);
     }
 
     float3 getPosition(const float3&) const override {
