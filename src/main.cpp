@@ -131,10 +131,14 @@ int main() {
     while (1) {
         deltaTimeGetPerformance();
 
-        if (SDL_PollEvent(&WindowEvent)) {
-            if (WindowEvent.type == SDL_EVENT_QUIT)
-            { break; }
+        bool exit = false;
+        while (SDL_PollEvent(&WindowEvent)) {
+            if (WindowEvent.type == SDL_EVENT_QUIT) {
+                exit = true;
+                break;
+            }
         }
+        if (exit) break;
 
         //
         // Input
@@ -144,20 +148,26 @@ int main() {
         // Camera Movement
         float moveSpeed = 2.0f;
 
+        float3 moveDir = float3::Filled(0);
+
         // Move forward/backward
         if (KEY_PRESSED(KEY_W)) {
-            camera.position += camera.Forward() * moveSpeed * DeltaTime;
+            moveDir += camera.Forward();
         }
         if (KEY_PRESSED(KEY_S)) {
-            camera.position -= camera.Forward() * moveSpeed * DeltaTime;
+            moveDir -= camera.Forward();
         }
         // Move left/right
         if (KEY_PRESSED(KEY_A)) {
-            camera.position -= camera.Right() * moveSpeed * DeltaTime;
+            moveDir -= camera.Right();
         }
         if (KEY_PRESSED(KEY_D)) {
-            camera.position += camera.Right() * moveSpeed * DeltaTime;
+            moveDir += camera.Right();
         }
+
+        moveDir = moveDir.normalized() * moveSpeed * DeltaTime;
+
+        camera.position += moveDir;
 
         // Move up/down (world up)
         if (KEY_PRESSED(KEY_SPACE)) {

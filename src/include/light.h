@@ -71,6 +71,9 @@ public:
 
     float3 getPosition(const float3 &point) const override {
         constexpr float inf = std::numeric_limits<float>::infinity();
+
+        // Sets the position to an "infinite" distance away in the direction of direction
+        // Use the foor loop to prevent problems with a 0 in the direction
         float3 pos = point;
         for (std::size_t i = 0; i < 3; i++) {
             if (direction[i] > 0.0f)

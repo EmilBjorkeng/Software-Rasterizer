@@ -1,6 +1,7 @@
 #include "time_utils.h"
 #include <SDL3/SDL.h>
-#include <iostream>
+#include <cstdio>
+#include <algorithm>
 
 float DeltaTime;
 float fps;
@@ -18,6 +19,7 @@ void deltaTime() {
     uint64_t EndCounter = SDL_GetPerformanceCounter();
     uint64_t ElapsedTime = EndCounter - FPSCounter;
     DeltaTime = (float)ElapsedTime / (float)PerfFrequency;
+    DeltaTime = std::min(DeltaTime, 1.0f);
 
     fps = (float)PerfFrequency / (float)ElapsedTime;
     MSPerFrame = 1000.0f * DeltaTime;
