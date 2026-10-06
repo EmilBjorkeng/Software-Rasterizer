@@ -1,5 +1,5 @@
 CC = g++
-CXXFLAGS = -Isrc/include -std=c++26 -Wall -Wextra
+CXXFLAGS = -Isrc/include -std=c++26 -Wall -Wextra -O2
 PKG_CFLAGS := $(shell pkg-config --cflags sdl3 sdl3-ttf)
 PKG_LDFLAGS := $(shell pkg-config --libs sdl3 sdl3-ttf)
 

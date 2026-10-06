@@ -234,7 +234,7 @@ int main() {
         SDL_UnlockTexture(drawTexture);
         SDL_RenderTexture(Renderer, drawTexture, NULL, NULL);
 
-        drawFPS(Renderer, Font);
+        drawFPS(Renderer, Font, WINDOW_WIDTH);
 
         SDL_RenderPresent(Renderer);
         deltaTime();

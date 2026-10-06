@@ -25,9 +25,9 @@ void deltaTime() {
     MSPerFrame = 1000.0f * DeltaTime;
 }
 
-void drawFPS(SDL_Renderer *Renderer, TTF_Font *Font) {
+void drawFPS(SDL_Renderer *Renderer, TTF_Font *Font, const int screenWidth) {
     char text[16];
-    sprintf(text, "FPS: %d", (int)fps);
+    snprintf(text, sizeof(text), "FPS: %d", (int)fps);
 
     SDL_Color color = {255, 255, 255, 255};
     int length = (int)strlen(text);
@@ -43,8 +43,15 @@ void drawFPS(SDL_Renderer *Renderer, TTF_Font *Font) {
         return;
     }
 
-    SDL_FRect messageRect = {720.0f - (float)surfaceMessage->w - 5.0f, 5.0f, (float)surfaceMessage->w, (float)surfaceMessage->h};
+    constexpr float margin = 5.0f;
+    SDL_FRect messageRect = {
+        (float)screenWidth - (float)surfaceMessage->w - margin,
+        margin,
+        (float)surfaceMessage->w,
+        (float)surfaceMessage->h
+    };
     SDL_RenderTexture(Renderer, message, NULL, &messageRect);
     SDL_DestroySurface(surfaceMessage);
     SDL_DestroyTexture(message);
 }
+

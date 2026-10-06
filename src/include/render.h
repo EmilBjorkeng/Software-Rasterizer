@@ -8,8 +8,8 @@
 #include <vector>
 #include <cstdint>
 
-#define SCREEN_WIDTH 720
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 1792
+#define SCREEN_HEIGHT 1008
 
 void RendersceneObjects(uint32_t *drawBuffer, int pitch, float *depthBuffer, const Camera<float> &camera,
     const std::vector<const Object*> &sceneObjects, const std::vector<const Light*> &light);

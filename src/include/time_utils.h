@@ -13,6 +13,6 @@ extern uint64_t FPSCounter;
 
 void deltaTimeGetPerformance();
 void deltaTime();
-void drawFPS(SDL_Renderer *Renderer, TTF_Font *Font);
+void drawFPS(SDL_Renderer *Renderer, TTF_Font *Font, const int screenWidth);
 
 #endif
