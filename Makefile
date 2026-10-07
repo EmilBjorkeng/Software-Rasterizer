@@ -7,16 +7,6 @@ TARGET = main
 SRC = $(wildcard src/*.cpp)
 OBJ = $(SRC:src/%.cpp=%.o)
 
-ifeq ($(OS),Windows_NT)
-	RM = del /Q
-	EXE = .exe
-	RUN_CMD = .\$(TARGET)$(EXE)
-else
-	RM = rm -f
-	EXE =
-	RUN_CMD = ./$(TARGET)
-endif
-
 .PHONY: all clean run debug
 
 all: $(TARGET)$(EXE)
@@ -28,11 +18,12 @@ $(TARGET)$(EXE): $(OBJ)
 	$(CC) $(CXXFLAGS) $^ -o $@ $(PKG_LDFLAGS)
 
 clean:
-	-$(RM) $(TARGET)$(EXE)
-	-$(RM) *.o
+	-rm -f $(TARGET)
+	-rm -f *.o
 
-run: all
-	$(RUN_CMD)
+run:
+	$(MAKE) -j$(NPROC) all
+	./$(TARGET)
 
 debug: clean
 	$(MAKE) CXXFLAGS="$(CXXFLAGS) -g"
